@@ -16,6 +16,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public void prepend(T value) {
         // TODO
+        if(value == null){
+            throw new DoubleEndedQueueException("The value cannot be null");
+        }
         DequeNode<T> val = new DequeNode<>(value, null, first);
         first.setPrevious(val);
         first=val;
@@ -29,41 +32,57 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public void append(T value) {
         // TODO
-        DequeNode<T> val = new DequeNode<>(value, null, null);
+        if(value ==null){
+            throw new DoubleEndedQueueException("The value cannot be null");
+        }
+        DequeNode<T> val = new DequeNode<>(value, last, null);
+        last.setNext(val);
+        last = val;
         if(first == null){
             first = val;
         }
-
-        last = val;
         size++;
     }
 
     @Override
     public void deleteFirst() {
         // TODO
+        if(first == null){
+            throw new DoubleEndedQueueException("The list is empty");
+        }
+        DequeNode <T> val = first;
         first = first.getNext();
+        val=null;
+
     }
 
     @Override
     public void deleteLast() {
         // TODO
+        if(last == null){
+            throw new DoubleEndedQueueException("The list is empty");
+        }
+        DequeNode <T> val = last;
+        last = last.getPrevious();
+        val=null;
+
     }
 
     @Override
     public T first() {
         // TODO
-        return null;
+        return first.getItem();
     }
 
     @Override
     public T last() {
         // TODO
-        return null;
+        return last.getItem();
     }
 
     @Override
     public int size() {
         // TODO
-        return 0;
+        return size;
     }
 }
