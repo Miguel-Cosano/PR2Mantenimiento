@@ -1,7 +1,0 @@
-package deque;
-
-
-class DequeNodeTest {
-
-
-}

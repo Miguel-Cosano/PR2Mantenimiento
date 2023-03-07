@@ -1,6 +1,0 @@
-package deque;
-
-
-class DoublyLinkedListDequeTest {
-
-}
