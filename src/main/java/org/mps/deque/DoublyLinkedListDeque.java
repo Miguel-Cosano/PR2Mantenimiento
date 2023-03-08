@@ -20,7 +20,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             throw new DoubleEndedQueueException("The value cannot be null");
         }
         DequeNode<T> val = new DequeNode<>(value, null, first);
-        first.setPrevious(val);
+        if(first != null){ //En caso de que no sea el unico elemento de la lista
+            first.setPrevious(val);
+        }
         first=val;
         if(last==null){ //En caso de que sea el unico elemento de la lista
             last=val;
@@ -36,7 +38,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             throw new DoubleEndedQueueException("The value cannot be null");
         }
         DequeNode<T> val = new DequeNode<>(value, last, null);
-        last.setNext(val);
+        if(last != null){
+            last.setNext(val);
+        }
         last = val;
         if(first == null){
             first = val;
@@ -51,8 +55,11 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             throw new DoubleEndedQueueException("The list is empty");
         }
         DequeNode <T> val = first;
+
         first = first.getNext();
         val=null;
+
+        size--;
 
     }
 
@@ -65,6 +72,8 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         DequeNode <T> val = last;
         last = last.getPrevious();
         val=null;
+
+        size--;
 
     }
 
