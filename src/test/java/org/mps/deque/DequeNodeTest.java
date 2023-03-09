@@ -60,7 +60,9 @@ public class DequeNodeTest
             void testHeadNodeIsFirstNodeReturnsTrue()
             {
                 boolean expected = true;
+
                 boolean actual = head.isFirstNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -69,7 +71,9 @@ public class DequeNodeTest
             void testHeadNodeIsNotATerminalNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = head.isNotATerminalNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -78,7 +82,9 @@ public class DequeNodeTest
             void testHeadNodeIsTheLastNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = head.isLastNode();
+
                 assertEquals(expected, actual);
             }
         }
@@ -99,7 +105,9 @@ public class DequeNodeTest
             void testNodeIsFirstNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = node.isFirstNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -108,7 +116,9 @@ public class DequeNodeTest
             void testNodeIsNotATerminalNodeReturnsTrue()
             {
                 boolean expected = true;
+
                 boolean actual = node.isNotATerminalNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -117,7 +127,43 @@ public class DequeNodeTest
             void testNodeIsTheLastNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = node.isLastNode();
+
+                assertEquals(expected, actual);
+            }
+
+            @Test
+            @DisplayName("the node value is changed successful")
+            void testChangingTheValueOfANodeReturnsTheExpectedValue()
+            {
+                int expected = 33;
+
+                node.setItem(33);
+                int actual = node.getItem();
+
+                assertEquals(expected, actual);
+            }
+
+            @Test
+            @DisplayName("the previous node of our middle node is the head")
+            void testPreviousNodeOfMiddleNodeIsTheHeadReturnsTrue()
+            {
+                boolean expected = true;
+
+                boolean actual = node.getPrevious() == head;
+
+                assertEquals(expected, actual);
+            }
+
+            @Test
+            @DisplayName("the next node of our middle node is the tail")
+            void testNextNodeOfMiddleNodeIsTheTailReturnsTrue()
+            {
+                boolean expected = true;
+
+                boolean actual = node.getNext() == tail;
+
                 assertEquals(expected, actual);
             }
         }
@@ -138,7 +184,9 @@ public class DequeNodeTest
             void testTailNodeIsFirstNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = tail.isFirstNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -147,7 +195,9 @@ public class DequeNodeTest
             void testTailNodeIsNotATerminalNodeReturnsFalse()
             {
                 boolean expected = false;
+
                 boolean actual = tail.isNotATerminalNode();
+
                 assertEquals(expected, actual);
             }
 
@@ -156,9 +206,12 @@ public class DequeNodeTest
             void testTailNodeIsTheLastNodeReturnsTrue()
             {
                 boolean expected = true;
+
                 boolean actual = tail.isLastNode();
+
                 assertEquals(expected, actual);
             }
         }
     }
+
 }
