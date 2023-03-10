@@ -5,6 +5,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * author: Edgar Antonio Álvarez González and Miguel Angel Cosano Ramirez
+ */
 
 @DisplayName("A Node")
 public class DequeNodeTest
