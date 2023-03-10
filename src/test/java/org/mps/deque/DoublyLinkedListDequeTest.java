@@ -34,7 +34,7 @@ public class DoublyLinkedListDequeTest {
             assertEquals(0, deque.size());
         }
         @Nested
-        @DisplayName("after prepend a node")
+        @DisplayName("prepend")
         class AfterPrependTestCases{
             @Test
             @DisplayName("in empty list")
@@ -54,14 +54,10 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(2, deque.first());
                 assertEquals(1, deque.last());
             }
-            @Test
-            @DisplayName("throws exception when prepend with null value")
-            public void testPrependWithNullValue() {
-                assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
-            }
+
         }
         @Nested
-        @DisplayName("after append a node")
+        @DisplayName("append")
         class AfterAppendTestCases{
             @Test
             @DisplayName("in empty list")
@@ -82,15 +78,11 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(2, deque.last());
             }
 
-            @Test
-            @DisplayName("throws exception when append with null value")
-            public void testAppendWithNullValue() {
-                assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
-            }
+
         }
 
         @Nested
-        @DisplayName("after delete a node")
+        @DisplayName("delete")
         class afterDeleteTestCases{
             @Test
             @DisplayName("first node ")
@@ -114,28 +106,33 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(1, deque.last());
             }
 
-            @Test
-            @DisplayName("throws exception when delete first with empty list")
-            public void testDeleteFirstWithEmptyList() {
-                assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
-            }
 
-            @Test
-            @DisplayName("throws exception when delete last with empty list")
-            public void testDeleteLastWithEmptyList() {
-                assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
-            }
+
+
         }
-
-
-
-
-
-
-
-
-
+        @Test
+        @DisplayName("throws exception when delete last with empty list")
+        public void testDeleteLastWithEmptyList() {
+            assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
+        }
+        @Test
+        @DisplayName("throws exception when delete first with empty list")
+        public void testDeleteFirstWithEmptyList() {
+            assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
+        }
+        @Test
+        @DisplayName("throws exception when append with null value")
+        public void testAppendWithNullValue() {
+            assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
+        }
+        @Test
+        @DisplayName("throws exception when prepend with null value")
+        public void testPrependWithNullValue() {
+            assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
+        }
     }
+
+
     @AfterEach
     public void tearDown() {
         deque = null;
