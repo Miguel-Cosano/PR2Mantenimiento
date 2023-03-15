@@ -33,7 +33,7 @@ public class DoublyLinkedListDequeTest {
     class whenNewTestCases{
         @Test
         @DisplayName("empty list size is 0")
-        public void testEmptyList() {
+        public void testEmptyListSizeIsZero() {
             assertEquals(0, deque.size());
         }
         @Nested
@@ -64,8 +64,9 @@ public class DoublyLinkedListDequeTest {
         class AfterAppendTestCases{
             @Test
             @DisplayName("in empty list")
-            public void testAppendEmptyList() {
+            public void testAppendInEmptyList() {
                 deque.append(1);
+
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(1, deque.last());
@@ -73,9 +74,10 @@ public class DoublyLinkedListDequeTest {
 
             @Test
             @DisplayName("in a list with one node")
-            public void testAppend() {
+            public void testAppendInAListWithOneNode() {
                 deque.append(1);
                 deque.append(2);
+
                 assertEquals(2, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(2, deque.last());
@@ -89,10 +91,11 @@ public class DoublyLinkedListDequeTest {
         class afterDeleteTestCases{
             @Test
             @DisplayName("first node ")
-            public void testDeleteFirst() {
+            public void testDeleteFirstNodeInAListWith2Nodes() {
                 deque.append(1);
                 deque.append(2);
                 deque.deleteFirst();
+
                 assertEquals(1, deque.size());
                 assertEquals(2, deque.first());
                 assertEquals(2, deque.last());
@@ -100,10 +103,11 @@ public class DoublyLinkedListDequeTest {
 
             @Test
             @DisplayName("last node ")
-            public void testDeleteLast() {
+            public void testDeleteLastNodeInListWithTwoNodes() {
                 deque.append(1);
                 deque.append(2);
                 deque.deleteLast();
+
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(1, deque.last());
@@ -112,28 +116,94 @@ public class DoublyLinkedListDequeTest {
 
 
 
+
+
+
         }
         @Test
-        @DisplayName("throws exception when delete last with empty list")
+        @DisplayName("when delete last with empty list throws exception")
         public void testDeleteLastWithEmptyList() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
         }
         @Test
-        @DisplayName("throws exception when delete first with empty list")
+        @DisplayName("when delete first with empty list throws exception")
         public void testDeleteFirstWithEmptyList() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
         }
         @Test
-        @DisplayName("throws exception when append with null value")
+        @DisplayName("when append null value throws exception")
         public void testAppendWithNullValue() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
         }
         @Test
-        @DisplayName("throws exception when prepend with null value")
+        @DisplayName("when prepend with null value throws exception")
         public void testPrependWithNullValue() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
         }
+        @DisplayName("remove")
+        @Nested
+        class afterRemoveTestCases {
+            @Test
+            @DisplayName("first node ")
+            public void testRemoveFirstNodeInAListWith2Nodes() {
+                deque.append(1);
+                deque.append(2);
+                deque.remove(1);
+
+                assertEquals(1, deque.size());
+                assertEquals(2, deque.first());
+                assertEquals(2, deque.last());
+            }
+
+            @Test
+            @DisplayName("last node ")
+            public void testRemoveLastNodeInListWithTwoNodes() {
+                deque.append(1);
+                deque.append(2);
+                deque.remove(2);
+
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+            }
+
+            @Test
+            @DisplayName ("intermediate node")
+            public void testRemoveIntermediateNode() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                deque.remove(2);
+
+                assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+
+
+            }
+
+            @Test
+            @DisplayName("in empty list")
+            public void testRemoveInEmptyList() {
+                deque.remove(1);
+
+                assertEquals(0, deque.size());
+            }
+
+            @Test
+            @DisplayName("in a list with two elements with same value")
+            public void testRemoveInAListWithTwoElementsWithSameValue() {
+                deque.append(1);
+                deque.append(1);
+                deque.remove(1);
+
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+            }
+        }
     }
+
 
 
     @AfterEach

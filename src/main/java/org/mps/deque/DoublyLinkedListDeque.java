@@ -103,21 +103,79 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        if(index < 0 || index >= size){
+            throw new DoubleEndedQueueException("The index is out of bounds");
+        }
+        int i = 0;
+
+        while(i < index){
+            first = first.getNext();
+            i++;
+        }
+
+        return first.getItem();
     }
 
     @Override
     public boolean contains(T value) {
-        return false;
+        int i = 0;
+
+        while(i < size && !first.getItem().equals(value)){
+            first = first.getNext();
+            i++;
+        }
+
+        return first.getItem().equals(value);
     }
 
     @Override
     public void remove(T value) {
-
+        int i = 0;
+            if(contains(value)){
+            while(i < size && !first.getItem().equals(value)){
+                first = first.getNext();
+                i++;
+            }
+            if(first == last){
+                first = null;
+                last = null;
+            }else if(first == last.getPrevious()){
+                first.getPrevious().setNext(last);
+                last.setPrevious(first.getPrevious());
+                first = first
+            }else if(first == first.getNext()){
+                first = null;
+                last.setNext(null);
+            }else{
+                first.getPrevious().setNext(first.getNext());
+                first.getNext().setPrevious(first.getPrevious());
+            }
+            size--;
+        }
+            //elemento menos, no debe estar, si hay dos elimina el primero
     }
 
     @Override
     public void sort(Comparator<? super T> comparator) {
-
+        // TODO
+        if(comparator == null){
+            throw new DoubleEndedQueueException("The comparator cannot be null");
+        }
+        if(size > 1){
+            boolean swapped = true;
+            while(swapped){
+                swapped = false;
+                DequeNode<T> current = first;
+                while(current.getNext() != null){
+                    if(comparator.compare(current.getItem(), current.getNext().getItem()) > 0){
+                        T temp = current.getItem();
+                        current.setItem(current.getNext().getItem());
+                        current.getNext().setItem(temp);
+                        swapped = true;
+                    }
+                    current = current.getNext();
+                }
+            }
+        }
     }
 }
