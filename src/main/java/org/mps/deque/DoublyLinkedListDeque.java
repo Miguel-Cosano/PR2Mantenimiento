@@ -119,36 +119,43 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public boolean contains(T value) {
         int i = 0;
-
-        while(i < size && !first.getItem().equals(value)){
-            first = first.getNext();
+        DequeNode<T> node = first;
+        while(i < size && !node.getItem().equals(value)){
+            node = node.getNext();
             i++;
         }
 
-        return first.getItem().equals(value);
+        /**
+         * En caso de que el valor no se encuentre en la lista, el nodo sera null
+         */
+        return node != null;
     }
 
     @Override
     public void remove(T value) {
         int i = 0;
+        DequeNode<T> node = first;
             if(contains(value)){
-            while(i < size && !first.getItem().equals(value)){
-                first = first.getNext();
+                /**
+                 * First we search for the node with the value we want to delete
+                 */
+            while(i < size && !node.getItem().equals(value)){
+                node = node.getNext();
                 i++;
             }
-            if(first == last){
-                first = null;
-                last = null;
-            }else if(first == last.getPrevious()){
-                first.getPrevious().setNext(last);
-                last.setPrevious(first.getPrevious());
-                first = first
-            }else if(first == first.getNext()){
-                first = null;
+
+            /**
+             * Then we check if the node is the first and the last node
+             */
+            if(node == last){ //If the node is the last node
+                last = last.getPrevious();
                 last.setNext(null);
-            }else{
-                first.getPrevious().setNext(first.getNext());
-                first.getNext().setPrevious(first.getPrevious());
+            }else if(node == first){ //If the node is the first node
+                first = first.getNext();
+                first.setPrevious(null);
+            }else{//If the node is in the middle
+                node.getPrevious().setNext(node.getNext());
+                node.getNext().setPrevious(node.getPrevious());
             }
             size--;
         }
