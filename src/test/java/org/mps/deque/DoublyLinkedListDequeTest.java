@@ -3,6 +3,8 @@ package org.mps.deque;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -153,6 +155,7 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(1, deque.size());
                 assertEquals(2, deque.first());
                 assertEquals(2, deque.last());
+                assertEquals(false, deque.contains(1));
             }
 
             @Test
@@ -165,6 +168,7 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(1, deque.last());
+                assertEquals(false, deque.contains(2));
             }
 
             @Test
@@ -178,6 +182,7 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(2, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(3, deque.last());
+                assertEquals(false, deque.contains(2));
 
 
             }
@@ -190,6 +195,7 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(0, deque.size());
             }
 
+
             @Test
             @DisplayName("in a list with two elements with same value")
             public void testRemoveInAListWithTwoElementsWithSameValue() {
@@ -200,7 +206,197 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(1, deque.last());
+
             }
+
+            @Test
+            @DisplayName("when you delete there is a reduction in size")
+            public void testRemoveInAListReducesSize() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                deque.remove(2);
+
+                assertEquals(2, deque.size());
+            }
+        }
+
+        @Nested
+        @DisplayName("get")
+        class afterGetTestCases{
+
+            @Test
+            @DisplayName("first node ")
+            public void testGetFirstNodeInAListWith2Nodes() {
+                deque.append(1);
+                deque.append(2);
+                assertEquals(1, deque.get(0));
+            }
+
+            @Test
+            @DisplayName("last node ")
+            public void testGetLastNodeInAListWith2Nodes() {
+                deque.append(1);
+                deque.append(2);
+                assertEquals(2, deque.get(1));
+            }
+
+            @Test
+            @DisplayName("intermediate node ")
+            public void testGetIntermediateNodeInAListWith3Nodes() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                assertEquals(2, deque.get(1));
+            }
+
+            @Test
+            @DisplayName("in empty list")
+            public void testGetInEmptyListThrowsException() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.get(0));
+            }
+
+            @Test
+            @DisplayName("when index is negative")
+            public void testGetWithNegativeIndexThrowsException() {
+                deque.append(1);
+
+                assertThrows(DoubleEndedQueueException.class, () -> deque.get(-1));
+            }
+
+            @Test
+            @DisplayName("when index is greater than size")
+            public void testGetWithIndexGreaterThanSizeThrowsException() {
+                deque.append(1);
+
+                assertThrows(DoubleEndedQueueException.class, () -> deque.get(1));
+            }
+
+        }
+
+        @Nested
+        @DisplayName("contains")
+        class afterContainsTestCases{
+            @Test
+            @DisplayName("when value is present")
+            public void testContainsWhenValueIsPresent() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+
+                assertEquals(true, deque.contains(2));
+            }
+
+            @Test
+            @DisplayName("when value is not present")
+            public void testContainsWhenValueIsNotPresent() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+
+                assertEquals(false, deque.contains(4));
+            }
+
+
+        }
+
+        @Nested
+        @DisplayName("sort")
+        class afterSortTestCases{
+
+            @Test
+            @DisplayName("when list is empty")
+            public void testSortWhenListIsEmpty() {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+
+                deque.sort(comparator);
+
+                assertEquals(0, deque.size());
+            }
+
+            @Test
+            @DisplayName("when list has one element")
+            public void testSortWhenListHasOneElement() {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+            }
+
+            @Test
+            @DisplayName("when list has two elements")
+            public void testSortWhenListHasTwoElements() {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(2, deque.last());
+            }
+
+            @Test
+            @DisplayName("when list has three elements")
+            public void testSortWhenListHasThreeElements() {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(3, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+            }
+
+            @Test
+            @DisplayName("when list has more than three elements")
+            public void testSortWhenListHasMoreThanThreeElements() {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(5);
+                deque.append(4);
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(5, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(5, deque.last());
+            }
+
+            @Test
+            @DisplayName("when list has more than three elements and comparator is reverse")
+            public void testSortWhenListHasMoreThanThreeElementsAndComparatorIsReverse() {
+                Comparator<Integer> comparator = (o1, o2) -> o2 - o1;
+                deque.append(5);
+                deque.append(4);
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(5, deque.size());
+                assertEquals(5, deque.first());
+                assertEquals(1, deque.last());
+            }
+
+            @Test
+            @DisplayName("when comparator is null throws exception")
+            public void testSortWhenComparatorIsNullThrowsException() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.sort(null));
+            }
+
+
         }
     }
 
