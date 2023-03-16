@@ -139,7 +139,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
                 /**
                  * First we search for the node with the value we want to delete
                  */
-            while(i < size && !node.getItem().equals(value)){
+            while(!node.getItem().equals(value)){
                 node = node.getNext();
                 i++;
             }
