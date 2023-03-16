@@ -165,44 +165,25 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void sort(Comparator<? super T> comparator) {
-        // TODO
-        if(comparator == null){
+        if(comparator== null){
             throw new DoubleEndedQueueException("The comparator cannot be null");
         }
-        if(size != 0){
-            DequeNode<T> node = first;
-            DequeNode<T> node2 = first.getNext();
-            for(int i = 0; i < size; i++){
-                for(int j = i+1; j < size; j++){
-                    if(comparator.compare(node.getItem(), node2.getItem() ) > 0 && node2!=null){
-
-                        if(node == first){
-                            first = node2;
-                        }
-                        if(node2 == last){
-                            last = node;
-                        }
-
-                        node.setNext(node2.getNext());
-                        node2.setNext(node);
-                        node2.setPrevious(node.getPrevious());
-                        node.setPrevious(node2);
-
-
-
-
+        DequeNode<T> current = null, index = null;
+        T temp;
+        if (first == null) {
+            return;
+        } else {
+            for (current = first; current.getNext() != null; current = current.getNext()) {
+                for (index = current.getNext(); index != null; index = index.getNext()) {
+                    if (comparator.compare(current.getItem(), index.getItem()) > 0) {
+                        temp = current.getItem();
+                        current.setItem(index.getItem());
+                        index.setItem((T) temp);
                     }
-                    if(node2.getNext() != null){
-                        node2 = node2.getNext();
-                    }
-                }
-                if(node.getNext() != null){
-                    node = node.getNext();
-                    node2 = node.getNext();
                 }
             }
-        }
 
+        }
 
 
     }
