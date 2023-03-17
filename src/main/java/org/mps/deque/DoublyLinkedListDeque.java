@@ -2,37 +2,32 @@ package org.mps.deque;
 
 import java.util.Comparator;
 
+
 /**
  * author: Edgar Antonio Álvarez González and Miguel Angel Cosano Ramirez
  */
-public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
-{
+public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     private DequeNode<T> first;
     private DequeNode<T> last;
     private int size;
 
-    public DoublyLinkedListDeque()
-    {
+    public DoublyLinkedListDeque() {
         first = null;
         last = null;
         size = 0;
     }
 
     @Override
-    public void prepend(T value)
-    {
-        if (value == null)
-        {
+    public void prepend(T value) {
+        if (value == null) {
             throw new DoubleEndedQueueException("The value cannot be null");
         }
         DequeNode<T> val = new DequeNode<>(value, null, first);
-        if (first != null)
-        { //En caso de que no sea el unico elemento de la lista
+        if (first != null) { //En caso de que no sea el unico elemento de la lista
             first.setPrevious(val);
         }
         first = val;
-        if (last == null)
-        { //En caso de que sea el unico elemento de la lista
+        if (last == null) { //En caso de que sea el unico elemento de la lista
             last = val;
         }
 
@@ -40,46 +35,40 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
     }
 
     @Override
-    public void append(T value)
-    {
-        if (value == null)
-        {
+
+    public void append(T value) {
+        if (value == null) {
             throw new DoubleEndedQueueException("The value cannot be null");
         }
         DequeNode<T> val = new DequeNode<>(value, last, null);
-        if (last != null)
-        {
+        if (last != null) {
             last.setNext(val);
         }
         last = val;
-        if (first == null)
-        {
+        if (first == null) {
             first = val;
         }
         size++;
     }
 
     @Override
-    public void deleteFirst()
-    {
-        if (first == null)
-        {
+
+    public void deleteFirst() {
+        if (first == null) {
             throw new DoubleEndedQueueException("The list is empty");
         }
         DequeNode<T> val = first;
 
         first = first.getNext();
         val = null;
-
         size--;
 
     }
 
     @Override
-    public void deleteLast()
-    {
-        if (last == null)
-        {
+
+    public void deleteLast() {
+        if (last == null) {
             throw new DoubleEndedQueueException("The list is empty");
         }
         DequeNode<T> val = last;
@@ -91,20 +80,17 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
     }
 
     @Override
-    public T first()
-    {
+    public T first() {
         return first.getItem();
     }
 
     @Override
-    public T last()
-    {
+    public T last() {
         return last.getItem();
     }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
@@ -117,11 +103,10 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public T get(int index)
-    {
+
+    public T get(int index) {
         // If the index parameter is out of bounds we throw an IndexOutOfBoundsException
-        if (index < 0 || index >= this.size)
-        {
+        if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException("Out of bounds index");
         }
 
@@ -129,8 +114,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
         DequeNode<T> current = first;
 
         // Iterate through the queue until we reach the desired index
-        while (counter < index)
-        {
+        while (counter < index) {
             current = current.getNext();
             counter++;
         }
@@ -148,14 +132,12 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
      * @return {@code true} if this deque contains the specified element
      */
     @Override
-    public boolean contains(T value)
-    {
+    public boolean contains(T value) {
         int counter = 0;
         DequeNode<T> current = first;
 
         // Iterate through the queue until we find a node with the desired value
-        while (counter < size && !current.getItem().equals(value))
-        {
+        while (counter < size && !current.getItem().equals(value)) {
             current = current.getNext();
             counter++;
         }
@@ -169,47 +151,43 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
      * @param value to be removed from this deque, if present
      */
     @Override
-    public void remove(T value)
-    {
-        if (this.contains(value))
-        {
-            // Create a cursor to iterate through the queue, indicates our current position in the queue
-            DequeNode<T> current = first;
-            int counter = 0;
-
-            // Iterate through the queue until we find the first node containing our value
-            while (counter < size && !current.getItem().equals(value))
-            {
-                current = current.getNext();
-                counter++;
+    public void remove(T value) {
+        int i = 0;
+        DequeNode<T> node = first;
+        if(contains(value)){
+            /**
+             * First we search for the node with the value we want to delete
+             */
+            while(!node.getItem().equals(value)){
+                node = node.getNext();
+                i++;
             }
 
             /**
-             * If our cursor is at the first node, we just set first to its next node.
-             * If our cursor is at the last node, we set last to its previous node.
-             * If it's in between:
-             *      1) Our current.previous.next will be set to our current.next
-             *      2) Our current.next.previous will be set to our current.previous
+             * Then we check if the node is the first and the last node
              */
-            if (current == first)
-            {
-                first = first.getNext();
-                if (first != null)
-                    first.setPrevious(null);
-            } else if (current == last)
-            {
-                last = last.getPrevious();
-                if (last != null)
-                    last.setNext(null);
-            } else
-            {
-                current.getPrevious().setNext(current.getNext());
-                current.getNext().setPrevious(current.getPrevious());
+            if(node == first || node == last){
+                if(node == first){
+                    first = node.getNext();
+                    if(first != null){
+                        first.setPrevious(null);
+                    }
+                }
+                if(node == last){
+                    last = node.getPrevious();
+                    if(last != null){
+                        last.setNext(null);
+                    }
+                }
+            }else{
+                node.getPrevious().setNext(node.getNext());
+                node.getNext().setPrevious(node.getPrevious());
             }
 
-            // Remove an element from the total size of the queue
+
             size--;
         }
+        //elemento menos, no debe estar, si hay dos elimina el primero
     }
 
     /**
@@ -222,22 +200,16 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
      * @param comparator the {@code Comparator} used to compare deque elements
      */
     @Override
-    public void sort(Comparator<? super T> comparator)
-    {
-        if (comparator == null)
-        {
+    public void sort(Comparator<? super T> comparator) {
+        if (comparator == null) {
             throw new DoubleEndedQueueException("The comparator cannot be null");
         }
         DequeNode<T> current, index;
         T temp;
-        if (first != null)
-        {
-            for (current = first; current.getNext() != null; current = current.getNext())
-            {
-                for (index = current.getNext(); index != null; index = index.getNext())
-                {
-                    if (comparator.compare(current.getItem(), index.getItem()) > 0)
-                    {
+        if (first != null) {
+            for (current = first; current.getNext() != null; current = current.getNext()) {
+                for (index = current.getNext(); index != null; index = index.getNext()) {
+                    if (comparator.compare(current.getItem(), index.getItem()) > 0) {
                         temp = current.getItem();
                         current.setItem(index.getItem());
                         index.setItem(temp);

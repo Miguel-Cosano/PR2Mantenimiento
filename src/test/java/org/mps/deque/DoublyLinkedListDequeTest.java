@@ -12,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * author: Edgar Antonio Álvarez González and Miguel Angel Cosano Ramirez
  */
 @DisplayName("A DoublyLinkedListDeque")
-public class DoublyLinkedListDequeTest
-{
+public class DoublyLinkedListDequeTest {
     DoublyLinkedListDeque<Integer> deque;
 
     /**
@@ -22,64 +21,54 @@ public class DoublyLinkedListDequeTest
     @BeforeEach
     @Test
     @DisplayName("is instantiated with new DoublyLinkedListDeque()")
-    public void setUp()
-    {
+    public void setUp() {
         deque = new DoublyLinkedListDeque<>();
     }
 
     @AfterEach
-    public void tearDown()
-    {
+    public void tearDown() {
         deque = null;
     }
 
     @Nested
     @DisplayName("When new")
-    class whenNewTestCases
-    {
+    class whenNewTestCases {
         @Test
         @DisplayName("empty list size is 0")
-        public void testEmptyList()
-        {
+        public void testEmptyList() {
             assertEquals(0, deque.size());
         }
 
         @Test
         @DisplayName("throws exception when delete last with empty list")
-        public void testDeleteLastWithEmptyList()
-        {
+        public void testDeleteLastWithEmptyList() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
         }
 
         @Test
         @DisplayName("throws exception when delete first with empty list")
-        public void testDeleteFirstWithEmptyList()
-        {
+        public void testDeleteFirstWithEmptyList() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
         }
 
         @Test
         @DisplayName("throws exception when append with null value")
-        public void testAppendWithNullValue()
-        {
+        public void testAppendWithNullValue() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
         }
 
         @Test
         @DisplayName("throws exception when prepend with null value")
-        public void testPrependWithNullValue()
-        {
+        public void testPrependWithNullValue() {
             assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
         }
 
         @Nested
         @DisplayName("prepend()")
-        class AfterPrependTestCases
-        {
+        class AfterPrependTestCases {
             @Test
             @DisplayName("in empty list")
-            public void testPrependEmptyList()
-            {
+            public void testPrependEmptyList() {
                 deque.prepend(1);
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
@@ -88,8 +77,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("in a list with one node")
-            public void testPrepend()
-            {
+            public void testPrepend() {
                 deque.append(1);
                 deque.prepend(2);
                 assertEquals(2, deque.size());
@@ -101,12 +89,10 @@ public class DoublyLinkedListDequeTest
 
         @Nested
         @DisplayName("append()")
-        class AfterAppendTestCases
-        {
+        class AfterAppendTestCases {
             @Test
             @DisplayName("in empty list")
-            public void testAppendEmptyList()
-            {
+            public void testAppendEmptyList() {
                 deque.append(1);
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
@@ -115,8 +101,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("in a list with one node")
-            public void testAppend()
-            {
+            public void testAppend() {
                 deque.append(1);
                 deque.append(2);
                 assertEquals(2, deque.size());
@@ -127,12 +112,10 @@ public class DoublyLinkedListDequeTest
 
         @Nested
         @DisplayName("delete()")
-        class afterDeleteTestCases
-        {
+        class afterDeleteTestCases {
             @Test
             @DisplayName("first node ")
-            public void testDeleteFirst()
-            {
+            public void testDeleteFirst() {
                 deque.append(1);
                 deque.append(2);
                 deque.deleteFirst();
@@ -143,8 +126,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("last node ")
-            public void testDeleteLast()
-            {
+            public void testDeleteLast() {
                 deque.append(1);
                 deque.append(2);
                 deque.deleteLast();
@@ -159,34 +141,29 @@ public class DoublyLinkedListDequeTest
          */
         @Nested
         @DisplayName("get()")
-        class afterGetANodeFromTheDoublyLinkedListDequeTests
-        {
+        class afterGetANodeFromTheDoublyLinkedListDequeTests {
             @Test
             @DisplayName("the empty list throws exception")
-            void testGetWhenTheDoublyLinkedListDequeIsEmptyThrowsIndexOutOfBoundsException()
-            {
+            void testGetWhenTheDoublyLinkedListDequeIsEmptyThrowsIndexOutOfBoundsException() {
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(0));
             }
 
             @Test
             @DisplayName("negative index value throws exception")
-            void testGetWhenIndexIsANegativeValueThrowsIndexOutOfBoundsException()
-            {
+            void testGetWhenIndexIsANegativeValueThrowsIndexOutOfBoundsException() {
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(-1));
             }
 
             @Test
             @DisplayName("index value is bigger than the size of the deque")
-            void testGetWhenIndexHasAValueBiggerThanDequeSizeThrowsIndexOutOfBoundsException()
-            {
+            void testGetWhenIndexHasAValueBiggerThanDequeSizeThrowsIndexOutOfBoundsException() {
                 deque.append(0);
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(1));
             }
 
             @Test
             @DisplayName("the first element of the deque")
-            void testGetTheFirstElementOfTheDequeReturnsTheFirstElement()
-            {
+            void testGetTheFirstElementOfTheDequeReturnsTheFirstElement() {
                 deque.append(0);
                 deque.append(1);
                 deque.append(2);
@@ -200,8 +177,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("the last element of the deque")
-            void testGetTheLastElementOfTheDequeReturnsTheFirstElement()
-            {
+            void testGetTheLastElementOfTheDequeReturnsTheFirstElement() {
                 deque.append(0);
                 deque.append(1);
                 deque.append(2);
@@ -215,8 +191,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("any in-between element of the deque")
-            void testGetAnyInBetweenElementsOfTheDequeReturnsTheFirstElement()
-            {
+            void testGetAnyInBetweenElementsOfTheDequeReturnsTheFirstElement() {
                 deque.append(0);
                 deque.append(1);
                 deque.append(2);
@@ -235,12 +210,10 @@ public class DoublyLinkedListDequeTest
          */
         @Nested
         @DisplayName("contains()")
-        class afterContainsANodeInTheDoublyLinkedListDequeTests
-        {
+        class afterContainsANodeInTheDoublyLinkedListDequeTests {
             @Test
             @DisplayName(" the value in the queue is present")
-            public void testContainsWhenValueIsPresentReturnsTrue()
-            {
+            public void testContainsWhenValueIsPresentReturnsTrue() {
                 deque.append(1);
 
                 boolean expected = true;
@@ -252,8 +225,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName(" the value in the queue is not present")
-            public void testContainsWhenValueIsNotPresentReturnsFalse()
-            {
+            public void testContainsWhenValueIsNotPresentReturnsFalse() {
                 deque.append(1);
 
                 boolean expected = false;
@@ -265,8 +237,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName(" the empty list does not contain any value ")
-            public void testContainsWhenTheDoublyLinkedListDequeIsEmptyReturnFalse()
-            {
+            public void testContainsWhenTheDoublyLinkedListDequeIsEmptyReturnFalse() {
                 boolean expected = false;
 
                 boolean actual = deque.contains(2);
@@ -280,8 +251,7 @@ public class DoublyLinkedListDequeTest
          */
         @Nested
         @DisplayName("sort()")
-        class afterSortingTheDoublyLinkedListDequeTests
-        {
+        class afterSortingTheDoublyLinkedListDequeTests {
 
         }
 
@@ -290,12 +260,10 @@ public class DoublyLinkedListDequeTest
          */
         @DisplayName("remove")
         @Nested
-        class afterRemoveTestCases
-        {
+        class afterRemoveTestCases {
             @Test
             @DisplayName("first node ")
-            public void testRemoveFirstNodeInAListWith2Nodes()
-            {
+            public void testRemoveFirstNodeInAListWith2Nodes() {
                 deque.append(1);
                 deque.append(2);
                 deque.remove(1);
@@ -308,8 +276,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("last node ")
-            public void testRemoveLastNodeInListWithTwoNodes()
-            {
+            public void testRemoveLastNodeInListWithTwoNodes() {
                 deque.append(1);
                 deque.append(2);
                 deque.remove(2);
@@ -322,8 +289,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("intermediate node")
-            public void testRemoveIntermediateNode()
-            {
+            public void testRemoveIntermediateNode() {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
@@ -339,8 +305,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("node not included in list")
-            public void removeNodeNotIncludedReturnsSameList()
-            {
+            public void removeNodeNotIncludedReturnsSameList() {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
@@ -354,8 +319,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("in empty list")
-            public void testRemoveInEmptyList()
-            {
+            public void testRemoveInEmptyList() {
                 deque.remove(1);
 
                 assertEquals(0, deque.size());
@@ -364,8 +328,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("in a list with two elements with same value")
-            public void testRemoveInAListWithTwoElementsWithSameValue()
-            {
+            public void testRemoveInAListWithTwoElementsWithSameValue() {
                 deque.append(1);
                 deque.append(1);
                 deque.remove(1);
@@ -378,8 +341,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("size is reduced")
-            public void testRemoveInAListReducesSize()
-            {
+            public void testRemoveInAListReducesSize() {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
@@ -392,8 +354,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("in a list with one element")
-            public void testRemoveInAListWithOneElement()
-            {
+            public void testRemoveInAListWithOneElement() {
                 deque.append(1);
                 deque.remove(1);
 
@@ -404,13 +365,11 @@ public class DoublyLinkedListDequeTest
 
         @Nested
         @DisplayName("sort")
-        class afterSortTestCases
-        {
+        class afterSortTestCases {
 
             @Test
             @DisplayName("empty list")
-            public void testSortWhenListIsEmptyReturnsZero()
-            {
+            public void testSortWhenListIsEmptyReturnsZero() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
 
                 deque.sort(comparator);
@@ -420,8 +379,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("one element list")
-            public void testSortWhenListHasOneElementReturnsListWithOneElement()
-            {
+            public void testSortWhenListHasOneElementReturnsListWithOneElement() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(1);
 
@@ -435,8 +393,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("two elements list")
-            public void testSortWhenListHasTwoElementsReturnsListWithTwoElements()
-            {
+            public void testSortWhenListHasTwoElementsReturnsListWithTwoElements() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(2);
                 deque.append(1);
@@ -453,8 +410,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("three elements list")
-            public void testSortWhenListHasThreeElementsReturnsListWithThreeElements()
-            {
+            public void testSortWhenListHasThreeElementsReturnsListWithThreeElements() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(3);
                 deque.append(2);
@@ -472,8 +428,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("list with more than three elements")
-            public void testSortWhenListHasMoreThanThreeElementsReturnsListWithMoreThanThreeElements()
-            {
+            public void testSortWhenListHasMoreThanThreeElementsReturnsListWithMoreThanThreeElements() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(5);
                 deque.append(4);
@@ -497,8 +452,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("list with more than three elements and comparator is reverse")
-            public void testSortWhenListHasMoreThanThreeElementsAndComparatorIsReverse()
-            {
+            public void testSortWhenListHasMoreThanThreeElementsAndComparatorIsReverse() {
                 Comparator<Integer> comparator = (o1, o2) -> o2 - o1;
                 deque.append(5);
                 deque.append(4);
@@ -520,8 +474,7 @@ public class DoublyLinkedListDequeTest
 
             @Test
             @DisplayName("when null comparator throws exception")
-            public void testSortWhenComparatorIsNullThrowsException()
-            {
+            public void testSortWhenComparatorIsNullThrowsException() {
                 assertThrows(DoubleEndedQueueException.class, () -> deque.sort(null));
             }
         }
