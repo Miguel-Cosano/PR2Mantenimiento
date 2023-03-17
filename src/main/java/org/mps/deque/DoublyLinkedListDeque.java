@@ -158,7 +158,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
             counter++;
         }
 
-        return first.getItem().equals(value);
+        return first != null;
     }
 
     /**
