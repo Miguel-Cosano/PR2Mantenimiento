@@ -169,40 +169,45 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
     @Override
     public void remove(T value)
     {
-        // Create a cursor to iterate through the queue, indicates our current position in the queue
-        DequeNode<T> current = first;
-        int counter = 0;
-
-        // Iterate through the queue until we find the first node containing our value
-        while (counter < size && !current.getItem().equals(value))
+        if (this.contains(value))
         {
-            current = current.getNext();
-            counter++;
+            // Create a cursor to iterate through the queue, indicates our current position in the queue
+            DequeNode<T> current = first;
+            int counter = 0;
+
+            // Iterate through the queue until we find the first node containing our value
+            while (counter < size && !current.getItem().equals(value))
+            {
+                current = current.getNext();
+                counter++;
+            }
+
+            /**
+             * If our cursor is at the first node, we just set first to its next node.
+             * If our cursor is at the last node, we set last to its previous node.
+             * If it's in between:
+             *      1) Our current.previous.next will be set to our current.next
+             *      2) Our current.next.previous will be set to our current.previous
+             */
+            if (current == first)
+            {
+                first = first.getNext();
+                if (first != null)
+                    first.setPrevious(null);
+            } else if (current == last)
+            {
+                last = last.getPrevious();
+                if (last != null)
+                    last.setNext(null);
+            } else
+            {
+                current.getPrevious().setNext(current.getNext());
+                current.getNext().setPrevious(current.getPrevious());
+            }
+
+            // Remove an element from the total size of the queue
+            size--;
         }
-
-        /**
-         * If our cursor is at the first node, we just set first to its next node.
-         * If our cursor is at the last node, we set last to its previous node.
-         * If it's in between:
-         *      1) Our current.previous.next will be set to our current.next
-         *      2) Our current.next.previous will be set to our current.previous
-         */
-        if (current == first)
-        {
-            first = first.getNext();
-            first.setPrevious(null);
-        } else if (current == last)
-        {
-            last = last.getPrevious();
-            last.setNext(null);
-        } else
-        {
-            current.getPrevious().setNext(current.getNext());
-            current.getNext().setPrevious(current.getPrevious());
-        }
-
-        // Remove an element from the total size of the queue
-        size--;
     }
 
     /**
