@@ -37,7 +37,7 @@ Test cases for DoublyLinkedListDeque
 7.Contains
     7.1 the vale is in the list :-> The value is not present in the queue so the method returns false
     7.2 the vale is not in the list :-> The value is present in the queue so the method returns true
-    7.3 the empty list does not contain any value :-> The empty list does not contain any value so the method returns false
+    7.3 in empty list:-> The empty list does not contain any value so the method returns false
 8.Remove
     8.1 size is reduced by one :-> When we remove a node, the size is reduced by one
     8.2 in a list with one element :-> When we remove the only element of the list, the list is empty
@@ -351,7 +351,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName(" the empty list does not contain any value ")
+            @DisplayName("in empty list")
             public void testContainsWhenTheDoublyLinkedListDequeIsEmptyReturnFalse() {
                 boolean expected = false;
 
