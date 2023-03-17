@@ -8,6 +8,53 @@ import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/*
+Test cases for DoublyLinkedListDeque
+1.Empty list size is 0 :-> In an empty list, the size is 0
+2.Prepend
+    2.1 in empty list :-> In an empty list, when we prepend a node it becomes the first and last element and the size is 1
+    2.2 in a list with one node :-> In a list with one node, when we prepend a node it becomes the first element and the size is 2
+    2.3 when prepend with null value throws exception :-> When prepend with null value throws exception
+3.Append
+    3.1 in empty list :-> In an empty list, when we append a node it becomes the last and first element and the size is 1
+    3.2 in a list with one node :-> In a list with one node, when we append a node it becomes the last element and the size is 2
+    3.3 when append with null value throws exception :-> When append with null value throws exception
+4.DeleteFirst
+    4.1 when delete first in empty list throws exception :-> When delete first in empty list throws exception
+    4.2 in a list with two nodes :-> In a list with two nodes, when we delete the first node, the first node is the second node and the size is 1. Is the same for a list with more nodes.
+5.DeleteLast
+    5.1 when delete last in empty list throws exception :-> When delete last in empty list throws exception
+    5.2 in a list with two nodes :-> In a list with two nodes, when we delete the last node, the last node is the first node and the size is 1. Is the same for a list with more nodes.
+6.Get
+    6.1 when the list is empty throws exception :-> When the list is empty throws exception
+    6.2 when negative index value throws exception :-> When negative index value throws exception
+    6.3 when index value is bigger than the size of the deque throws exception :-> When index value is bigger than the size of the deque throws exception
+    6.4 the first element of the deque  :-> When the index value is 0, we get the first element of the deque
+    6.5 the last element of the deque :-> When the index value is the size of the deque - 1, we get the last element of the deque
+    6.6 any in-between element of the deque :-> When the index value is any in-between element of the deque, we get the element in that position
+7.Contains
+    7.1 the vale int the queue is not present :-> The value is not present in the queue so the method returns false
+    7.2 the vale int the queue is present :-> The value is present in the queue so the method returns true
+    7.3 the empty list does not contain any value :-> The empty list does not contain any value so the method returns false
+8.Remove
+    8.1 size is reduced by one :-> When we remove a node, the size is reduced by one
+    8.2 in a list with one element :-> When we remove the only element of the list, the list is empty
+    8.3 in a list with two elements with same value :-> When we remove a value that is repeated in the list, it removes the first node with that value
+    8.4 node not included in list :-> When we try to remove a node that is not included in the list, the list is not modified
+    8.5 intermediate node :-> When we remove an intermediate node, the list is modified correctly
+    8.6 last node :-> When we remove the last node, the list is modified correctly
+    8.7 first node :-> When we remove the first node, the list is modified correctly
+    8.8 in empty list :-> When we try to remove a node in an empty list, the list is not modified
+9.Sort
+    9.1 when null comparator throws exception :-> When null comparator throws exception
+    9.2 list with more than three elements and comparator is reverse :-> When the list has more than three elements and the comparator is reverse, the list is sorted in reverse order correctly
+    9.3 two elements list :-> When the list has two elements, the list is sorted correctly
+    9.4 list with more than three elements :-> When the list has more than three elements, the list is sorted correctly
+    9.6 empty list :-> When the list is empty, the list is not modified
+    9.7 one element list :-> When the list has one element, it returns the same list
+    9.8 three elements list :-> When the list has three elements, the list is sorted correctly
+ */
+
 /**
  * author: Edgar Antonio Álvarez González and Miguel Angel Cosano Ramirez
  */
@@ -33,106 +80,172 @@ public class DoublyLinkedListDequeTest {
     @Nested
     @DisplayName("When new")
     class whenNewTestCases {
+
         @Test
         @DisplayName("empty list size is 0")
         public void testEmptyList() {
             assertEquals(0, deque.size());
         }
 
-        @Test
-        @DisplayName("throws exception when delete last with empty list")
-        public void testDeleteLastWithEmptyList() {
-            assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
-        }
-
-        @Test
-        @DisplayName("throws exception when delete first with empty list")
-        public void testDeleteFirstWithEmptyList() {
-            assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
-        }
-
-        @Test
-        @DisplayName("throws exception when append with null value")
-        public void testAppendWithNullValue() {
-            assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
-        }
-
-        @Test
-        @DisplayName("throws exception when prepend with null value")
-        public void testPrependWithNullValue() {
-            assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
-        }
-
         @Nested
-        @DisplayName("prepend()")
+        @DisplayName("prepend")
         class AfterPrependTestCases {
             @Test
             @DisplayName("in empty list")
             public void testPrependEmptyList() {
+
+                int expectedSize = 1;
+                int expectedFirst = 1;
+                int expectedLast = 1;
+
                 deque.prepend(1);
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
             }
 
             @Test
             @DisplayName("in a list with one node")
-            public void testPrepend() {
+            public void testPrependInLisWithOneNode() {
                 deque.append(1);
+
+                int expectedSize = 2;
+                int expectedFirst = 2;
+                int expectedLast = 1;
+
                 deque.prepend(2);
-                assertEquals(2, deque.size());
-                assertEquals(2, deque.first());
-                assertEquals(1, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+
+            }
+
+            @Test
+            @DisplayName("when prepend with null value throws exception ")
+            public void testPrependWithNullValue() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.prepend(null));
             }
 
         }
 
         @Nested
-        @DisplayName("append()")
+        @DisplayName("append")
         class AfterAppendTestCases {
             @Test
             @DisplayName("in empty list")
             public void testAppendEmptyList() {
+                int expectedSize = 1;
+                int expectedFirst = 1;
+                int expectedLast = 1;
+
                 deque.append(1);
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
             }
 
             @Test
             @DisplayName("in a list with one node")
             public void testAppend() {
                 deque.append(1);
+
+                int expectedSize = 2;
+                int expectedFirst = 1;
+                int expectedLast = 2;
+
                 deque.append(2);
-                assertEquals(2, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(2, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+            }
+
+            @Test
+            @DisplayName("when append with null value throws exception")
+            public void testAppendWithNullValue() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.append(null));
             }
         }
 
         @Nested
-        @DisplayName("delete()")
-        class afterDeleteTestCases {
+        @DisplayName("deleteFirst")
+        class afterDeleteFistTestCases {
             @Test
-            @DisplayName("first node ")
+            @DisplayName("in a list with two nodes")
             public void testDeleteFirst() {
                 deque.append(1);
                 deque.append(2);
+
+                int expectedSize = 1;
+                int expectedFirst = 2;
+                int expectedLast = 2;
+
+
                 deque.deleteFirst();
-                assertEquals(1, deque.size());
-                assertEquals(2, deque.first());
-                assertEquals(2, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
             }
 
             @Test
-            @DisplayName("last node ")
+            @DisplayName("when delete first with empty list throws exception")
+            public void testDeleteFirstWithEmptyList() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.deleteFirst());
+            }
+        }
+
+        @Nested
+        @DisplayName("deleteLast")
+        class afterDeleteLastTestCases {
+            @Test
+            @DisplayName("in a list with two nodes")
             public void testDeleteLast() {
                 deque.append(1);
                 deque.append(2);
+
+                int expectedSize = 1;
+                int expectedFirst = 1;
+                int expectedLast = 1;
+
                 deque.deleteLast();
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
+
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+            }
+
+            @Test
+            @DisplayName("when delete last with empty list throws exception")
+            public void testDeleteLastWithEmptyList() {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.deleteLast());
             }
         }
 
@@ -140,22 +253,22 @@ public class DoublyLinkedListDequeTest {
          * Test cases in charge of the get() function.
          */
         @Nested
-        @DisplayName("get()")
+        @DisplayName("get")
         class afterGetANodeFromTheDoublyLinkedListDequeTests {
             @Test
-            @DisplayName("the empty list throws exception")
+            @DisplayName("when the list is empty throws exception")
             void testGetWhenTheDoublyLinkedListDequeIsEmptyThrowsIndexOutOfBoundsException() {
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(0));
             }
 
             @Test
-            @DisplayName("negative index value throws exception")
+            @DisplayName("when negative index value throws exception")
             void testGetWhenIndexIsANegativeValueThrowsIndexOutOfBoundsException() {
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(-1));
             }
 
             @Test
-            @DisplayName("index value is bigger than the size of the deque")
+            @DisplayName("when index value is bigger than the size of the deque throws exception")
             void testGetWhenIndexHasAValueBiggerThanDequeSizeThrowsIndexOutOfBoundsException() {
                 deque.append(0);
                 assertThrows(IndexOutOfBoundsException.class, () -> deque.get(1));
@@ -209,7 +322,7 @@ public class DoublyLinkedListDequeTest {
          * Test cases in charge of the contains() function.
          */
         @Nested
-        @DisplayName("contains()")
+        @DisplayName("contains")
         class afterContainsANodeInTheDoublyLinkedListDequeTests {
             @Test
             @DisplayName(" the value in the queue is present")
@@ -250,7 +363,7 @@ public class DoublyLinkedListDequeTest {
          * Test cases in charge of the sort() function.
          */
         @Nested
-        @DisplayName("sort()")
+        @DisplayName("sort")
         class afterSortingTheDoublyLinkedListDequeTests {
 
         }
@@ -266,12 +379,23 @@ public class DoublyLinkedListDequeTest {
             public void testRemoveFirstNodeInAListWith2Nodes() {
                 deque.append(1);
                 deque.append(2);
+
+                int expectedSize= 1;
+                int expectedFirst= 2;
+                int expectedLast= 2;
+                boolean expectedContains= false;
+
                 deque.remove(1);
 
-                assertEquals(1, deque.size());
-                assertEquals(2, deque.first());
-                assertEquals(2, deque.last());
-                assertEquals(false, deque.contains(1));
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+                boolean actualContains= deque.contains(1);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedContains, actualContains);
             }
 
             @Test
@@ -279,12 +403,23 @@ public class DoublyLinkedListDequeTest {
             public void testRemoveLastNodeInListWithTwoNodes() {
                 deque.append(1);
                 deque.append(2);
+
+                int expectedSize= 1;
+                int expectedFirst= 1;
+                int expectedLast= 1;
+                boolean expectedContains= false;
+
                 deque.remove(2);
 
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
-                assertEquals(false, deque.contains(2));
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+                boolean actualContains= deque.contains(2);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedContains, actualContains);
             }
 
             @Test
@@ -293,12 +428,23 @@ public class DoublyLinkedListDequeTest {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
+
+                int expectedSize= 2;
+                int expectedFirst= 1;
+                int expectedLast= 3;
+                boolean expectedContains= false;
+
                 deque.remove(2);
 
-                assertEquals(2, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(3, deque.last());
-                assertEquals(false, deque.contains(2));
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+                boolean actualContains= deque.contains(2);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedContains, actualContains);
 
 
             }
@@ -309,20 +455,35 @@ public class DoublyLinkedListDequeTest {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
+
+                int expectedSize= 3;
+                int expectedFirst= 1;
+                int expectedLast= 3;
+                boolean expectedContains= false;
+
                 deque.remove(4);
 
-                assertEquals(3, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(3, deque.last());
-                assertEquals(false, deque.contains(4));
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+                boolean actualContains= deque.contains(4);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedContains, actualContains);
             }
 
             @Test
             @DisplayName("in empty list")
             public void testRemoveInEmptyList() {
+                int expectedSize= 0;
+
                 deque.remove(1);
 
-                assertEquals(0, deque.size());
+                int actualSize= deque.size();
+
+                assertEquals(expectedSize, actualSize);
             }
 
 
@@ -331,34 +492,58 @@ public class DoublyLinkedListDequeTest {
             public void testRemoveInAListWithTwoElementsWithSameValue() {
                 deque.append(1);
                 deque.append(1);
+
+                int expectedSize= 1;
+                int expectedFirst= 1;
+                int expectedLast= 1;
+
                 deque.remove(1);
 
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+
 
             }
 
             @Test
-            @DisplayName("size is reduced")
+            @DisplayName("size is reduced by one")
             public void testRemoveInAListReducesSize() {
                 deque.append(1);
                 deque.append(2);
                 deque.append(3);
+
+                int expectedSize= 2;
+                int expectedFirst= 1;
+                int expectedLast= 3;
+
                 deque.remove(2);
 
-                assertEquals(2, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(3, deque.last());
+                int actualSize= deque.size();
+                int actualFirst= deque.first();
+                int actualLast= deque.last();
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
             }
 
             @Test
             @DisplayName("in a list with one element")
             public void testRemoveInAListWithOneElement() {
                 deque.append(1);
+
+                int expectedSize= 0;
+
                 deque.remove(1);
 
-                assertEquals(0, deque.size());
+                int actualSize= deque.size();
+
+                assertEquals(expectedSize, actualSize);
 
             }
         }
@@ -372,9 +557,14 @@ public class DoublyLinkedListDequeTest {
             public void testSortWhenListIsEmptyReturnsZero() {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
 
+                int expected = 0;
+
                 deque.sort(comparator);
 
-                assertEquals(0, deque.size());
+                int actual = deque.size();
+
+
+                assertEquals(expected, actual);
             }
 
             @Test
@@ -383,12 +573,22 @@ public class DoublyLinkedListDequeTest {
                 Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(1);
 
+                int expectedSize = 1;
+                int expectedFirst = 1;
+                int expectedLast = 1;
+                int expectedElement = 1;
+
                 deque.sort(comparator);
 
-                assertEquals(1, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(1, deque.last());
-                assertEquals(1, deque.get(0));
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+                int actualElement = deque.get(0);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedElement, actualElement);
             }
 
             @Test
@@ -398,13 +598,25 @@ public class DoublyLinkedListDequeTest {
                 deque.append(2);
                 deque.append(1);
 
+                int expectedSize = 2;
+                int expectedFirst = 1;
+                int expectedLast = 2;
+                int expectedFirstElement = 1;
+                int expectedSecondElement = 2;
+
                 deque.sort(comparator);
 
-                assertEquals(2, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(2, deque.last());
-                assertEquals(1, deque.get(0));
-                assertEquals(2, deque.get(1));
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+                int actualFirstElement = deque.get(0);
+                int actualSecondElement = deque.get(1);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedFirstElement, actualFirstElement);
+                assertEquals(expectedSecondElement, actualSecondElement);
 
             }
 
@@ -436,17 +648,35 @@ public class DoublyLinkedListDequeTest {
                 deque.append(2);
                 deque.append(1);
 
+                int expectedSize = 5;
+                int expectedFirst = 1;
+                int expectedLast = 5;
+                int expectedFirstElement = 1;
+                int expectedSecondElement = 2;
+                int expectedThirdElement = 3;
+                int expectedFourthElement = 4;
+                int expectedFifthElement = 5;
+
+
                 deque.sort(comparator);
 
-                assertEquals(5, deque.size());
-                assertEquals(1, deque.first());
-                assertEquals(5, deque.last());
-                assertEquals(1, deque.get(0));
-                assertEquals(2, deque.get(1));
-                assertEquals(3, deque.get(2));
-                assertEquals(4, deque.get(3));
-                assertEquals(5, deque.get(4));
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+                int actualFirstElement = deque.get(0);
+                int actualSecondElement = deque.get(1);
+                int actualThirdElement = deque.get(2);
+                int actualFourthElement = deque.get(3);
+                int actualFifthElement = deque.get(4);
 
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedFirstElement, actualFirstElement);
+                assertEquals(expectedSecondElement, actualSecondElement);
+                assertEquals(expectedThirdElement, actualThirdElement);
+                assertEquals(expectedFourthElement, actualFourthElement);
+                assertEquals(expectedFifthElement, actualFifthElement);
             }
 
 
@@ -460,16 +690,35 @@ public class DoublyLinkedListDequeTest {
                 deque.append(2);
                 deque.append(1);
 
+                int expectedSize = 5;
+                int expectedFirst = 5;
+                int expectedLast = 1;
+                int expectedFirstElement = 5;
+                int expectedSecondElement = 4;
+                int expectedThirdElement = 3;
+                int expectedFourthElement = 2;
+                int expectedFifthElement = 1;
+
+
                 deque.sort(comparator);
 
-                assertEquals(5, deque.size());
-                assertEquals(5, deque.first());
-                assertEquals(1, deque.last());
-                assertEquals(5, deque.get(0));
-                assertEquals(4, deque.get(1));
-                assertEquals(3, deque.get(2));
-                assertEquals(2, deque.get(3));
-                assertEquals(1, deque.get(4));
+                int actualSize = deque.size();
+                int actualFirst = deque.first();
+                int actualLast = deque.last();
+                int actualFirstElement = deque.get(0);
+                int actualSecondElement = deque.get(1);
+                int actualThirdElement = deque.get(2);
+                int actualFourthElement = deque.get(3);
+                int actualFifthElement = deque.get(4);
+
+                assertEquals(expectedSize, actualSize);
+                assertEquals(expectedFirst, actualFirst);
+                assertEquals(expectedLast, actualLast);
+                assertEquals(expectedFirstElement, actualFirstElement);
+                assertEquals(expectedSecondElement, actualSecondElement);
+                assertEquals(expectedThirdElement, actualThirdElement);
+                assertEquals(expectedFourthElement, actualFourthElement);
+                assertEquals(expectedFifthElement, actualFifthElement);
             }
 
             @Test
