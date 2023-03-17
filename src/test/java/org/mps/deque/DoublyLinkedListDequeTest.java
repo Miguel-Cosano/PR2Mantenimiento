@@ -325,7 +325,7 @@ public class DoublyLinkedListDequeTest {
         @DisplayName("contains")
         class afterContainsANodeInTheDoublyLinkedListDequeTests {
             @Test
-            @DisplayName(" the value in the queue is present")
+            @DisplayName(" the value in the list is present")
             public void testContainsWhenValueIsPresentReturnsTrue() {
                 deque.append(1);
 
@@ -337,7 +337,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName(" the value in the queue is not present")
+            @DisplayName(" the value in the list is not present")
             public void testContainsWhenValueIsNotPresentReturnsFalse() {
                 deque.append(1);
 
