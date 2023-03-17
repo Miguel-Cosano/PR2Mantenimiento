@@ -126,15 +126,16 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
         }
 
         int counter = 0;
+        DequeNode<T> current = first;
 
         // Iterate through the queue until we reach the desired index
         while (counter < index)
         {
-            this.first = this.first.getNext();
+            current = current.getNext();
             counter++;
         }
 
-        return this.first.getItem();
+        return current.getItem();
     }
 
     /**
@@ -150,15 +151,16 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T>
     public boolean contains(T value)
     {
         int counter = 0;
+        DequeNode<T> current = first;
 
         // Iterate through the queue until we find a node with the desired value
-        while (counter < size && !first.getItem().equals(value))
+        while (counter < size && !current.getItem().equals(value))
         {
-            first = first.getNext();
+            current = current.getNext();
             counter++;
         }
 
-        return first != null;
+        return current != null;
     }
 
     /**

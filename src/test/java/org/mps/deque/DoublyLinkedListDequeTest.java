@@ -364,7 +364,7 @@ public class DoublyLinkedListDequeTest
             @DisplayName("Removing head of the deque returns null when only one element")
             void testRemoveHeadOfDequeReturnsNullWhenNoOtherElementsInQueue()
             {
-      
+
             }
 
         }
