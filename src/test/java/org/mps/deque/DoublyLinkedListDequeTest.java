@@ -3,6 +3,8 @@ package org.mps.deque;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -286,88 +288,242 @@ public class DoublyLinkedListDequeTest
         /**
          * Test cases in charge of the remove() function.
          */
+        @DisplayName("remove")
         @Nested
-        @DisplayName("remove()")
-        class afterRemovingANodeFromTheDoublyLinkedListDequeTests
+        class afterRemoveTestCases
         {
             @Test
-            @DisplayName("from empty list doesnt change the size")
-            public void testRemoveElementInEmptyDequeDoesntChangeDequeSize()
+            @DisplayName("first node ")
+            public void testRemoveFirstNodeInAListWith2Nodes()
             {
-                int expected = deque.size();
-
-                deque.remove(0);
-
-                int actual = deque.size();
-
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("deque size is reduced when deleting an element")
-            public void testRemoveElementInEmptyDequeChangesDequeSize()
-            {
-                deque.append(0);
                 deque.append(1);
                 deque.append(2);
+                deque.remove(1);
 
-                int expected = 2;
+                assertEquals(1, deque.size());
+                assertEquals(2, deque.first());
+                assertEquals(2, deque.last());
+                assertEquals(false, deque.contains(1));
+            }
 
+            @Test
+            @DisplayName("last node ")
+            public void testRemoveLastNodeInListWithTwoNodes()
+            {
+                deque.append(1);
+                deque.append(2);
                 deque.remove(2);
 
-                int actual = deque.size();
-
-                assertEquals(expected, actual);
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+                assertEquals(false, deque.contains(2));
             }
 
             @Test
-            @DisplayName("deque contains two elements with the same value changes size")
-            public void testRemoveElementWhenTwoElementsWithSameValueChangesSize() {
-                deque.append(0);
-                deque.append(0);
+            @DisplayName("intermediate node")
+            public void testRemoveIntermediateNode()
+            {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                deque.remove(2);
+
+                assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+                assertEquals(false, deque.contains(2));
+
+
+            }
+
+            @Test
+            @DisplayName("node not included in list")
+            public void removeNodeNotIncludedReturnsSameList()
+            {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                deque.remove(4);
+
+                assertEquals(3, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+                assertEquals(false, deque.contains(4));
+            }
+
+            @Test
+            @DisplayName("in empty list")
+            public void testRemoveInEmptyList()
+            {
+                deque.remove(1);
+
+                assertEquals(0, deque.size());
+            }
+
+
+            @Test
+            @DisplayName("in a list with two elements with same value")
+            public void testRemoveInAListWithTwoElementsWithSameValue()
+            {
+                deque.append(1);
+                deque.append(1);
+                deque.remove(1);
+
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+
+            }
+
+            @Test
+            @DisplayName("size is reduced")
+            public void testRemoveInAListReducesSize()
+            {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+                deque.remove(2);
+
+                assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+            }
+
+            @Test
+            @DisplayName("in a list with one element")
+            public void testRemoveInAListWithOneElement()
+            {
+                deque.append(1);
+                deque.remove(1);
+
+                assertEquals(0, deque.size());
+
+            }
+        }
+
+        @Nested
+        @DisplayName("sort")
+        class afterSortTestCases
+        {
+
+            @Test
+            @DisplayName("empty list")
+            public void testSortWhenListIsEmptyReturnsZero()
+            {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+
+                deque.sort(comparator);
+
+                assertEquals(0, deque.size());
+            }
+
+            @Test
+            @DisplayName("one element list")
+            public void testSortWhenListHasOneElementReturnsListWithOneElement()
+            {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
                 deque.append(1);
 
-                Integer expected = 2;
+                deque.sort(comparator);
 
-                deque.remove(0);
-
-                Integer actual = deque.size();
-
-                assertEquals(expected, actual);
-
+                assertEquals(1, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(1, deque.last());
+                assertEquals(1, deque.get(0));
             }
 
             @Test
-            @DisplayName("deque contains two elements with the same value removes the first occurrence")
-            public void testRemoveElementWhenTwoElementsWithSameValueRemovesTheFirstOccurrence() {
-                deque.append(0);
-                deque.append(0);
+            @DisplayName("two elements list")
+            public void testSortWhenListHasTwoElementsReturnsListWithTwoElements()
+            {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(2);
                 deque.append(1);
 
-                Integer expected = 1;
+                deque.sort(comparator);
 
-                deque.remove(0);
-
-                Integer actual = deque.get(1);
-
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("Removing head of the deque returns the new head")
-            void testRemoveHeadOfDequeReturnsTheSecondElementAsTheHead()
-            {
+                assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(2, deque.last());
+                assertEquals(1, deque.get(0));
+                assertEquals(2, deque.get(1));
 
             }
 
             @Test
-            @DisplayName("Removing head of the deque returns null when only one element")
-            void testRemoveHeadOfDequeReturnsNullWhenNoOtherElementsInQueue()
+            @DisplayName("three elements list")
+            public void testSortWhenListHasThreeElementsReturnsListWithThreeElements()
             {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(3, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+                assertEquals(1, deque.get(0));
+                assertEquals(2, deque.get(1));
+                assertEquals(3, deque.get(2));
+            }
+
+            @Test
+            @DisplayName("list with more than three elements")
+            public void testSortWhenListHasMoreThanThreeElementsReturnsListWithMoreThanThreeElements()
+            {
+                Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
+                deque.append(5);
+                deque.append(4);
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(5, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(5, deque.last());
+                assertEquals(1, deque.get(0));
+                assertEquals(2, deque.get(1));
+                assertEquals(3, deque.get(2));
+                assertEquals(4, deque.get(3));
+                assertEquals(5, deque.get(4));
 
             }
 
+
+            @Test
+            @DisplayName("list with more than three elements and comparator is reverse")
+            public void testSortWhenListHasMoreThanThreeElementsAndComparatorIsReverse()
+            {
+                Comparator<Integer> comparator = (o1, o2) -> o2 - o1;
+                deque.append(5);
+                deque.append(4);
+                deque.append(3);
+                deque.append(2);
+                deque.append(1);
+
+                deque.sort(comparator);
+
+                assertEquals(5, deque.size());
+                assertEquals(5, deque.first());
+                assertEquals(1, deque.last());
+                assertEquals(5, deque.get(0));
+                assertEquals(4, deque.get(1));
+                assertEquals(3, deque.get(2));
+                assertEquals(2, deque.get(3));
+                assertEquals(1, deque.get(4));
+            }
+
+            @Test
+            @DisplayName("when null comparator throws exception")
+            public void testSortWhenComparatorIsNullThrowsException()
+            {
+                assertThrows(DoubleEndedQueueException.class, () -> deque.sort(null));
+            }
         }
     }
-
 }
