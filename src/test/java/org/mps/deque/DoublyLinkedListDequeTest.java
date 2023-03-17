@@ -33,8 +33,8 @@ Test cases for DoublyLinkedListDeque
     6.5 the last element of the deque :-> When the index value is the size of the deque - 1, we get the last element of the deque
     6.6 any in-between element of the deque :-> When the index value is any in-between element of the deque, we get the element in that position
 7.Contains
-    7.1 the vale int the queue is not present :-> The value is not present in the queue so the method returns false
-    7.2 the vale int the queue is present :-> The value is present in the queue so the method returns true
+    7.1 the vale is in the list :-> The value is not present in the queue so the method returns false
+    7.2 the vale is not in the list :-> The value is present in the queue so the method returns true
     7.3 the empty list does not contain any value :-> The empty list does not contain any value so the method returns false
 8.Remove
     8.1 size is reduced by one :-> When we remove a node, the size is reduced by one
@@ -325,7 +325,7 @@ public class DoublyLinkedListDequeTest {
         @DisplayName("contains")
         class afterContainsANodeInTheDoublyLinkedListDequeTests {
             @Test
-            @DisplayName(" the value in the list is present")
+            @DisplayName(" the value is in the list")
             public void testContainsWhenValueIsPresentReturnsTrue() {
                 deque.append(1);
 
@@ -337,7 +337,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName(" the value in the list is not present")
+            @DisplayName(" the value is not in the list")
             public void testContainsWhenValueIsNotPresentReturnsFalse() {
                 deque.append(1);
 
