@@ -1,7 +1,9 @@
 package org.mps.deque;
 
 import java.util.Comparator;
-
+/*
+Enlace de repositorio GitHub: https://github.com/Miguel-Cosano/PR2Mantenimiento
+ */
 
 /**
  * author: Edgar Antonio Álvarez González and Miguel Angel Cosano Ramirez
