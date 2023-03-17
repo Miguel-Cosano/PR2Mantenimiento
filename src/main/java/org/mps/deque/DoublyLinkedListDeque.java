@@ -106,14 +106,15 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         if(index < 0 || index >= size){
             throw new DoubleEndedQueueException("The index is out of bounds");
         }
+        DequeNode<T> node = this.first;
         int i = 0;
 
         while(i < index){
-            first = first.getNext();
+            node = node.getNext();
             i++;
         }
 
-        return first.getItem();
+        return node.getItem();
     }
 
     @Override
@@ -147,16 +148,25 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             /**
              * Then we check if the node is the first and the last node
              */
-            if(node == last){ //If the node is the last node
-                last = last.getPrevious();
-                last.setNext(null);
-            }else if(node == first){ //If the node is the first node
-                first = first.getNext();
-                first.setPrevious(null);
-            }else{//If the node is in the middle
+            if(node == first || node == last){
+                if(node == first){
+                    first = node.getNext();
+                    if(first != null){
+                        first.setPrevious(null);
+                    }
+                }
+                if(node == last){
+                    last = node.getPrevious();
+                    if(last != null){
+                        last.setNext(null);
+                    }
+                }
+            }else{
                 node.getPrevious().setNext(node.getNext());
                 node.getNext().setPrevious(node.getPrevious());
             }
+
+
             size--;
         }
             //elemento menos, no debe estar, si hay dos elimina el primero
@@ -165,20 +175,23 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void sort(Comparator<? super T> comparator) {
-        if(comparator== null){
+        if (comparator == null)
+        {
             throw new DoubleEndedQueueException("The comparator cannot be null");
         }
-        DequeNode<T> current = null, index = null;
+        DequeNode<T> current, index;
         T temp;
-        if (first == null) {
-            return;
-        } else {
-            for (current = first; current.getNext() != null; current = current.getNext()) {
-                for (index = current.getNext(); index != null; index = index.getNext()) {
-                    if (comparator.compare(current.getItem(), index.getItem()) > 0) {
+        if (first != null)
+        {
+            for (current = first; current.getNext() != null; current = current.getNext())
+            {
+                for (index = current.getNext(); index != null; index = index.getNext())
+                {
+                    if (comparator.compare(current.getItem(), index.getItem()) > 0)
+                    {
                         temp = current.getItem();
                         current.setItem(index.getItem());
-                        index.setItem((T) temp);
+                        index.setItem(temp);
                     }
                 }
             }

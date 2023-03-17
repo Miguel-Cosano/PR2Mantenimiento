@@ -232,6 +232,18 @@ public class DoublyLinkedListDequeTest {
                 deque.remove(2);
 
                 assertEquals(2, deque.size());
+                assertEquals(1, deque.first());
+                assertEquals(3, deque.last());
+            }
+
+            @Test
+            @DisplayName("in a list with one element")
+            public void testRemoveInAListWithOneElement() {
+                deque.append(1);
+                deque.remove(1);
+
+                assertEquals(0, deque.size());
+
             }
         }
 
@@ -294,8 +306,29 @@ public class DoublyLinkedListDequeTest {
         @Nested
         @DisplayName("contains")
         class afterContainsTestCases{
+
             @Test
-            @DisplayName("value is present")
+            @DisplayName("value is present at the beginning")
+            public void testContainsWhenValueIsPresentAtTheBeginningReturnsTrue() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+
+                assertEquals(true, deque.contains(1));
+            }
+
+            @Test
+            @DisplayName("value is present at the end")
+            public void testContainsWhenValueIsPresentAtTheEndReturnsTrue() {
+                deque.append(1);
+                deque.append(2);
+                deque.append(3);
+
+                assertEquals(true, deque.contains(3));
+            }
+
+            @Test
+            @DisplayName("value is present in the middle")
             public void testContainsWhenValueIsPresentReturnsTrue() {
                 deque.append(1);
                 deque.append(2);
@@ -348,6 +381,7 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(1, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(1, deque.last());
+                assertEquals(1,deque.get(0));
             }
 
             @Test
@@ -362,6 +396,9 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(2, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(2, deque.last());
+                assertEquals(1,deque.get(0));
+                assertEquals(2,deque.get(1));
+
             }
 
             @Test
@@ -377,6 +414,9 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(3, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(3, deque.last());
+                assertEquals(1,deque.get(0));
+                assertEquals(2,deque.get(1));
+                assertEquals(3,deque.get(2));
             }
 
             @Test
@@ -394,6 +434,12 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(5, deque.size());
                 assertEquals(1, deque.first());
                 assertEquals(5, deque.last());
+                assertEquals(1,deque.get(0));
+                assertEquals(2,deque.get(1));
+                assertEquals(3,deque.get(2));
+                assertEquals(4,deque.get(3));
+                assertEquals(5,deque.get(4));
+
             }
 
 
@@ -413,6 +459,11 @@ public class DoublyLinkedListDequeTest {
                 assertEquals(5, deque.size());
                 assertEquals(5, deque.first());
                 assertEquals(1, deque.last());
+                assertEquals(5,deque.get(0));
+                assertEquals(4,deque.get(1));
+                assertEquals(3,deque.get(2));
+                assertEquals(2,deque.get(3));
+                assertEquals(1,deque.get(4));
             }
 
             @Test
