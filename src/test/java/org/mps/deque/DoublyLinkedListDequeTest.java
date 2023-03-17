@@ -224,7 +224,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName("when you delete there is a reduction in size")
+            @DisplayName("size is reduced")
             public void testRemoveInAListReducesSize() {
                 deque.append(1);
                 deque.append(2);
@@ -286,7 +286,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName("when index is negative")
+            @DisplayName("when index is negative throws exception")
             public void testGetWithNegativeIndexThrowsException() {
                 deque.append(1);
 
@@ -294,7 +294,7 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName("when index is greater than size")
+            @DisplayName("when index is greater than size throws exception")
             public void testGetWithIndexGreaterThanSizeThrowsException() {
                 deque.append(1);
 
@@ -467,14 +467,13 @@ public class DoublyLinkedListDequeTest {
             }
 
             @Test
-            @DisplayName("null comparator throws exception")
+            @DisplayName("when null comparator throws exception")
             public void testSortWhenComparatorIsNullThrowsException() {
                 assertThrows(DoubleEndedQueueException.class, () -> deque.sort(null));
             }
 
 
         }
-
 
     }
 
